@@ -38,7 +38,7 @@ export default function ApaItuZakat() {
         {showMenu && (
           <div className="md:hidden bg-green-600 text-white px-4 py-2">
             <Link href="/" onClick={() => setShowMenu(false)} className="block py-2 hover:underline">Home</Link>
-            <Link href="/zakat/form" onClick={() => setShowMenu(false)} className="block py-2 hover:underline">Bayar Zakat</Link>
+            <Link href="/syarat" onClick={() => setShowMenu(false)} className="block py-2 hover:underline">Syarat Zakat</Link>
           </div>
         )}
       </header>
@@ -119,7 +119,7 @@ export default function ApaItuZakat() {
       <section className="text-center py-12 bg-green-100/90 dark:bg-green-900/80 backdrop-blur-md my-6 mx-4 rounded-lg" data-aos="zoom-in">
         <h3 className="text-xl font-semibold mb-4 text-green-700 dark:text-green-300">Siap Menunaikan Zakat?</h3>
         <Link
-          href="/zakat/form"
+          href="/form"
           className="inline-block bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg shadow transition"
         >
           Bayar Zakat Sekarang

@@ -84,7 +84,7 @@ export default function InformasiDasarZakat() {
       <section className="text-center py-12 bg-green-100/90 dark:bg-green-900/80 backdrop-blur" data-aos="zoom-in">
         <h3 className="text-xl font-semibold mb-4 text-green-700 dark:text-green-300">Siap Menunaikan Zakat?</h3>
         <Link
-          href="/zakat/form"
+          href="/form"
           className="inline-block bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg shadow transition"
         >
           Bayar Zakat Sekarang
