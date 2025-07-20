@@ -19,6 +19,10 @@ type ZakatData = {
 const cloudName = 'dd2rkqcjf'
 const uploadPreset = 'zakat_upload'
 
+function formatRupiah(amount: number) {
+  return amount.toLocaleString('id-ID')
+}
+
 export default function KonfirmasiPembayaran() {
   const params = useSearchParams()
   const router = useRouter()
@@ -93,7 +97,14 @@ export default function KonfirmasiPembayaran() {
               <p><strong>Nama:</strong> {data.anonim ? 'Hamba Allah' : data.nama}</p>
               <p><strong>Bentuk Zakat:</strong> {data.bentuk}</p>
               <p><strong>Jumlah Jiwa:</strong> {data.jumlah_jiwa}</p>
-              {data.total && <p><strong>Total Zakat:</strong> Rp{data.total}</p>}
+              {data.total && (
+                <p>
+                  <strong>Total Zakat:</strong>{' '}
+                  {data.bentuk === 'beras'
+                    ? `${data.total.toFixed(1)} Kg`
+                    : `Rp${formatRupiah(data.total)}`}
+                </p>
+              )}
               <p><strong>Status:</strong> {uploadedUrl || data.bukti_transfer_url ? 'lunas' : 'belum'}</p>
 
               {(data.bukti_transfer_url || uploadedUrl) && (

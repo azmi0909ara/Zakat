@@ -34,6 +34,7 @@ export default function InformasiDasarZakat() {
             <nav className="hidden md:flex items-center gap-6">
               <Link href="/" className="hover:underline">Home</Link>
               <Link href="/info" className="hover:underline">Apa Itu Zakat</Link>
+              <Link href="/data_zakat" className="hover:underline">Data Zakat</Link>
             </nav>
           </div>
         </div>
@@ -42,6 +43,7 @@ export default function InformasiDasarZakat() {
           <div className="md:hidden bg-green-600 text-white px-4 py-2">
             <Link href="/" onClick={() => setShowMenu(false)} className="block py-2 hover:underline">Home</Link>
             <Link href="/info" onClick={() => setShowMenu(false)} className="block py-2 hover:underline">Apa Itu Zakat</Link>
+            <Link href="/data_zakat" onClick={() => setShowMenu(false)} className="block py-2 hover:underline">Data Zakat</Link>
           </div>
         )}
       </header>

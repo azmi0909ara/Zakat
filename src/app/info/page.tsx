@@ -31,6 +31,7 @@ export default function ApaItuZakat() {
             <nav className="hidden md:flex items-center gap-6">
               <Link href="/" className="hover:underline">Home</Link>
               <Link href="/syarat" className="hover:underline">Syarat Zakat</Link>
+              <Link href="/data_zakat" className="hover:underline">Data Zakat</Link>
             </nav>
           </div>
         </div>
@@ -39,6 +40,7 @@ export default function ApaItuZakat() {
           <div className="md:hidden bg-green-600 text-white px-4 py-2">
             <Link href="/" onClick={() => setShowMenu(false)} className="block py-2 hover:underline">Home</Link>
             <Link href="/syarat" onClick={() => setShowMenu(false)} className="block py-2 hover:underline">Syarat Zakat</Link>
+            <Link href="/data_zakat" onClick={() => setShowMenu(false)} className="block py-2 hover:underline">Data Zakat</Link>
           </div>
         )}
       </header>

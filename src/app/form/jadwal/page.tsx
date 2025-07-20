@@ -28,14 +28,21 @@ export default function JadwalKirimZakat() {
   }, [id])
 
   const handleKonfirmasi = async () => {
-    if (!id) return
-    await updateDoc(doc(db, 'zakat_fitrah', id), {
-      status_pembayaran: 'belum',
-      metode: 'beras',
-    })
-    alert('Jadwal dan informasi penyaluran telah dicatat.')
-    router.push('/')
-  }
+  if (!id) return;
+
+  const total = jumlahJiwa * 2.5; // total dalam kg, bukan uang
+
+  await updateDoc(doc(db, 'zakat_fitrah', id), {
+    status_pembayaran: 'belum',
+    metode: 'beras',
+    total, // simpan total beras dalam kg ke Firestore
+  });
+
+  alert('Jadwal dan informasi penyaluran telah dicatat.');
+  router.push('/');
+}
+
+
 
   return (
     <div className="min-h-screen py-16 px-4 bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
