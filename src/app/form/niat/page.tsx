@@ -1,12 +1,12 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
-export default function NiatZakatFitrahPage() {
+function NiatZakatFitrahContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
@@ -25,6 +25,7 @@ export default function NiatZakatFitrahPage() {
       style={{ backgroundImage: "url('/BgMasjid.jpeg')" }}
     >
       <div className="min-h-screen bg-white/30 dark:bg-black/30 backdrop-blur-md">
+        {/* Header */}
         <header className="sticky top-0 z-50 bg-green-700 text-white py-4 shadow-md">
           <div className="max-w-6xl mx-auto px-4 flex justify-between items-center">
             <h1 className="text-xl font-bold">Niat Zakat Fitrah</h1>
@@ -35,6 +36,7 @@ export default function NiatZakatFitrahPage() {
           </div>
         </header>
 
+        {/* Section */}
         <section className="max-w-4xl mx-auto py-16 px-4" data-aos="fade-up">
           <h2 className="text-3xl font-bold text-center text-green-700 dark:text-green-400 mb-8">
             Bacaan Niat Zakat Fitrah
@@ -83,6 +85,7 @@ export default function NiatZakatFitrahPage() {
           </div>
         </section>
 
+        {/* Footer */}
         <footer className="w-full bg-white/30 dark:bg-black/30 backdrop-blur-md border-t border-gray-300 dark:border-gray-700 py-6">
           <div className="max-w-6xl mx-auto px-4 text-center text-sm text-gray-800 dark:text-gray-400">
             &copy; {new Date().getFullYear()} Masjid Al-Ikhlas RT01 RW06
@@ -90,5 +93,13 @@ export default function NiatZakatFitrahPage() {
         </footer>
       </div>
     </div>
+  )
+}
+
+export default function NiatZakatFitrahPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <NiatZakatFitrahContent />
+    </Suspense>
   )
 }

@@ -1,11 +1,11 @@
 'use client'
 
 import { useSearchParams, useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { db } from '../../../../firebase'
 import { doc, getDoc, updateDoc } from 'firebase/firestore'
 
-export default function JadwalKirimZakat() {
+function JadwalKirimZakatInner() {
   const params = useSearchParams()
   const router = useRouter()
   const id = params.get('id')
@@ -24,25 +24,25 @@ export default function JadwalKirimZakat() {
         }
         setLoading(false)
       })
+    } else {
+      setLoading(false)
     }
   }, [id])
 
   const handleKonfirmasi = async () => {
-  if (!id) return;
+    if (!id) return
 
-  const total = jumlahJiwa * 2.5; // total dalam kg, bukan uang
+    const total = jumlahJiwa * 2.5 // total dalam kg, bukan uang
 
-  await updateDoc(doc(db, 'zakat_fitrah', id), {
-    status_pembayaran: 'belum',
-    metode: 'beras',
-    total, // simpan total beras dalam kg ke Firestore
-  });
+    await updateDoc(doc(db, 'zakat_fitrah', id), {
+      status_pembayaran: 'belum',
+      metode: 'beras',
+      total, // simpan total beras dalam kg ke Firestore
+    })
 
-  alert('Jadwal dan informasi penyaluran telah dicatat.');
-  router.push('/');
-}
-
-
+    alert('Jadwal dan informasi penyaluran telah dicatat.')
+    router.push('/')
+  }
 
   return (
     <div className="min-h-screen py-16 px-4 bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
@@ -56,26 +56,53 @@ export default function JadwalKirimZakat() {
         ) : (
           <>
             <div className="mb-6">
-              <h2 className="text-lg font-semibold mb-2">1. Lokasi Penyaluran Beras</h2>
-              <p><strong>Alamat:</strong> Kantor Sekretariat Masjid Al-Ikhlas, Jl. Contoh No.123, Kota Zakat</p>
-              <p><strong>Jam Operasional:</strong> 08.00 - 17.00 WIB (Senin - Sabtu)</p>
-              <p><strong>Kontak Person:</strong> Ust. Ahmad - 0812-3456-7890</p>
-              <p><strong>Panduan:</strong> Beras minimal 2,5 kg/jiwa, dikemas rapi. Bisa ditimbang di lokasi.</p>
-            </div>
-
-            <div className="mb-6">
-              <h2 className="text-lg font-semibold mb-2">2. Estimasi Nilai Zakat (Untuk Pencatatan)</h2>
-              <p><strong>Jumlah Jiwa:</strong> {jumlahJiwa}</p>
-              <p><strong>Total Beras:</strong> {jumlahJiwa * 2.5} kg</p>
-              <p><strong>Harga Per Kg:</strong> Rp{hargaPerKg.toLocaleString()}</p>
-              <p><strong>Estimasi Nilai Zakat:</strong> Rp{(jumlahJiwa * 2.5 * hargaPerKg).toLocaleString()}</p>
-            </div>
-
-            <div className="mb-6">
-              <h2 className="text-lg font-semibold mb-2">3. Konfirmasi Penyaluran</h2>
+              <h2 className="text-lg font-semibold mb-2">
+                1. Lokasi Penyaluran Beras
+              </h2>
               <p>
-                Dengan ini saya, <strong>{nama}</strong>, berkomitmen menyerahkan zakat beras fisik secara langsung
-                ke lokasi Masjid Al-Ikhlas pada jam operasional yang telah ditentukan.
+                <strong>Alamat:</strong> Kantor Sekretariat Masjid Al-Ikhlas, Jl.
+                Contoh No.123, Kota Zakat
+              </p>
+              <p>
+                <strong>Jam Operasional:</strong> 08.00 - 17.00 WIB (Senin -
+                Sabtu)
+              </p>
+              <p>
+                <strong>Kontak Person:</strong> Ust. Ahmad - 0812-3456-7890
+              </p>
+              <p>
+                <strong>Panduan:</strong> Beras minimal 2,5 kg/jiwa, dikemas
+                rapi. Bisa ditimbang di lokasi.
+              </p>
+            </div>
+
+            <div className="mb-6">
+              <h2 className="text-lg font-semibold mb-2">
+                2. Estimasi Nilai Zakat (Untuk Pencatatan)
+              </h2>
+              <p>
+                <strong>Jumlah Jiwa:</strong> {jumlahJiwa}
+              </p>
+              <p>
+                <strong>Total Beras:</strong> {jumlahJiwa * 2.5} kg
+              </p>
+              <p>
+                <strong>Harga Per Kg:</strong> Rp{hargaPerKg.toLocaleString()}
+              </p>
+              <p>
+                <strong>Estimasi Nilai Zakat:</strong>{' '}
+                Rp{(jumlahJiwa * 2.5 * hargaPerKg).toLocaleString()}
+              </p>
+            </div>
+
+            <div className="mb-6">
+              <h2 className="text-lg font-semibold mb-2">
+                3. Konfirmasi Penyaluran
+              </h2>
+              <p>
+                Dengan ini saya, <strong>{nama}</strong>, berkomitmen menyerahkan
+                zakat beras fisik secara langsung ke lokasi Masjid Al-Ikhlas pada
+                jam operasional yang telah ditentukan.
               </p>
               <button
                 onClick={handleKonfirmasi}
@@ -88,5 +115,13 @@ export default function JadwalKirimZakat() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function JadwalKirimZakat() {
+  return (
+    <Suspense fallback={<p>Loading halaman...</p>}>
+      <JadwalKirimZakatInner />
+    </Suspense>
   )
 }
